@@ -11,7 +11,7 @@ class Command
 {
     public:
         Command();
-        virtual void execute(Server *s);
+        virtual void execute(Server *s) = 0;
         virtual QString getName() const;
         virtual QString getDescription() const;
 

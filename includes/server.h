@@ -32,7 +32,7 @@ class Server : public QWidget
         void sendToAsleep(QString command);
         void sendToAwoken(QString command);
         void sendToAll(QString command);
-        void commandProcess(Command cmd);
+        void commandProcess(Command &cmd);
         void update();
         virtual void writeALog(const QString& log, LogType c);
 

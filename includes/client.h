@@ -7,7 +7,7 @@
 class Client
 {
     public:
-        Client();
+        Client(QTcpSocket* socket);
         QTcpSocket* getSocket() const;
         QString pseudo() const;
         int grade() const;

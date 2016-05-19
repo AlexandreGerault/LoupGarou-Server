@@ -13,6 +13,12 @@
   <property name="windowTitle">
    <string>Loup Garou - Serveur</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTextEdit" name="m_logsList">
@@ -22,18 +28,7 @@
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">.info{
-color: rgb(0, 0, 0);
-}
-
-.error{
-color: rgb(255, 0, 0);
-}
-
-span 
-{
-color: rgb(255,255,0);
-}</string>
+      <string notr="true"/>
      </property>
      <property name="readOnly">
       <bool>true</bool>
@@ -61,6 +56,10 @@ p, li { white-space: pre-wrap; }
     <layout class="QHBoxLayout" name="commandLayout">
      <item>
       <widget class="QLineEdit" name="m_commandLineEditor">
+       <property name="styleSheet">
+        <string notr="true">
+</string>
+       </property>
        <property name="clearButtonEnabled">
         <bool>false</bool>
        </property>
@@ -68,6 +67,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item>
       <widget class="QPushButton" name="m_sendCommandButton">
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
        <property name="text">
         <string>Envoyer commande</string>
        </property>

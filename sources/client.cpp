@@ -1,7 +1,8 @@
 #include "includes/client.h"
 
-Client::Client()
+Client::Client(QTcpSocket* socket)
 {
+    m_socket = socket;
 }
 
 void Client::setPseudo(QString pseudo)

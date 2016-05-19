@@ -85,7 +85,7 @@ void Server::onNewConnection()
     writeALog("Un nouveau client vient de se connecter", LogType::Info);
 
     QTcpSocket *newClientSocket = m_server->nextPendingConnection();
-    Client *newClient = new Client();
+    Client *newClient = new Client(newClientSocket);
     newClient->setPseudo("NewClient");
     newClient->setSocket(newClientSocket);
 
@@ -134,16 +134,16 @@ void Server::onConnectionLost()
  * protected functions *
  ***********************/
 
-void Server::commandProcess(Command cmd)
+void Server::commandProcess(Command &cmd)
 {
     cmd.execute(this);
 }
 
-void Server::sendToAll(QString command)
+void Server::sendToAll(QString message)
 {
     for(Client *c : m_clients)
     {
-        c->send(command);
+        c->send(message);
     }
 }
 

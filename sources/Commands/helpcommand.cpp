@@ -3,6 +3,7 @@
 
 HelpCommand::HelpCommand()
 {
+    m_name = "help";
     m_description = "Permet d'obtenir la liste des commandes et leur description correspondante.";
 }
 

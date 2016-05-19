@@ -33,7 +33,3 @@ QList<Command*> CommandManager::getCommands() const
     }
     return cmds;
 }
-
-void CommandManager::addCommand(Command cmd)
-{
-}

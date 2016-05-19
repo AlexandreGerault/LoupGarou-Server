@@ -52,8 +52,7 @@ void ServerWindow::sendCommand()
 
     try
     {
-        Command *cmd = nullptr;
-        cmd = m_commandManager.getCommand(cmdArgs.at(0));
+        Command *cmd = m_commandManager.getCommand(cmdArgs.at(0));
         cmd->execute(this);
     }
     catch(QString e)
