@@ -132,7 +132,11 @@ void Server::onConnectionLost()
     if(socket == 0)
         return;
     Client *c = getClientBySocket(socket);
+
+    std::cout << c->pseudo().toStdString() << " has been disconnected.\n";
     m_clients.removeOne(c);
+    c->getSocket()->deleteLater();
+    delete c;
 }
 
 /***********************
@@ -152,16 +156,19 @@ void Server::sendToAll(QString message)
     }
 }
 
-Client* Server::getClientBySocket(QTcpSocket *sock)
+Client * Server::getClientBySocket( QTcpSocket * sock )
 {
-    for(Client *c : m_clients)
+    auto it = std::find_if( m_clients.cbegin(), m_clients.cend(), [&sock]( Client const * const c )
     {
-        if(c->getSocket() == sock)
-        {
-            return c;
-        }
+            return c->getSocket() == sock;
+    });
+
+    if(it == m_clients.end())
+    {
+        throw std::runtime_error( "Client not found." );
     }
-    return NULL;
+
+    return *it;
 }
 
 CommandManager Server::getCommandManager() const
