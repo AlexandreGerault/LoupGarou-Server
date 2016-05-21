@@ -33,3 +33,11 @@ QList<Command*> CommandManager::getCommands() const
     }
     return cmds;
 }
+
+CommandManager::~CommandManager()
+{
+    for(QMap<QString, Command*>::const_iterator it = m_commands.begin(); it!= m_commands.end(); it++)
+    {
+        m_commands.remove(it.key());
+    }
+}

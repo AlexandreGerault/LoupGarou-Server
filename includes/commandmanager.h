@@ -11,6 +11,8 @@ class CommandManager
 {
     public:
         CommandManager();
+        ~CommandManager();
+
         Command* getCommand(QString label) const;
         QList<Command*> getCommands() const;
 
