@@ -3,6 +3,8 @@
 Server::Server() : m_logFile("logs.txt"), m_tailleMessage(0), m_serverStarted(false)
 {
     m_server = new QTcpServer(this);
+    std::cout << "Construction d'un objet Server\n";
+    startServer();
 }
 
 void Server::writeALog(const QString &log, LogType c)
@@ -16,7 +18,7 @@ void Server::writeALog(const QString &log, LogType c)
         case LogType::Send:    type = "send";    break;
         case LogType::Warning: type = "warning"; break;
     }
-    QString message = "[" + type.toUpper() + "] <span class=\"" + type + "\">" + log + "</span>";
+    QString message = "[" + type.toUpper() + "] " + log;
 
     std::cout << message.toStdString() << std::endl;
 }
@@ -44,6 +46,7 @@ void Server::startServer()
             writeALog("Le serveur a pu démarrer sur le port " + QString::number(m_server->serverPort()), LogType::Info);
             writeALog("En attente de clients", LogType::Info);
             connect(m_server, SIGNAL(newConnection()), this, SLOT(onNewConnection()));
+            emit serverStateChange();
         }
     }
     else
@@ -64,6 +67,7 @@ void Server::stopServer()
         m_serverStarted = false;
         writeALog("Arrêt du serveur.", LogType::Info);
         m_server->close();
+        emit serverStateChange();
     }
     else
     {
@@ -119,7 +123,7 @@ void Server::dataReceived()
     QString data;
     in >> data;
 
-    writeALog(data, LogType::Send);
+    writeALog(c->pseudo() + "] " + data, LogType::Send);
 }
 
 void Server::onConnectionLost()
@@ -128,6 +132,7 @@ void Server::onConnectionLost()
     if(socket == 0)
         return;
     Client *c = getClientBySocket(socket);
+    m_clients.removeOne(c);
 }
 
 /***********************
@@ -147,14 +152,6 @@ void Server::sendToAll(QString message)
     }
 }
 
-void Server::sendToAsleep(QString command)
-{
-}
-
-void Server::sendToAwoken(QString command)
-{
-}
-
 Client* Server::getClientBySocket(QTcpSocket *sock)
 {
     for(Client *c : m_clients)
@@ -172,6 +169,12 @@ CommandManager Server::getCommandManager() const
     return m_commandManager;
 }
 
+bool Server::isStarted() const
+{
+    return m_serverStarted;
+}
+
 Server::~Server()
 {
+    stopServer();
 }

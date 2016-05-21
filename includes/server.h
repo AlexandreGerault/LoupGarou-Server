@@ -18,7 +18,7 @@
 
 enum class LogType {Info, Warning, Error, Send};
 
-class Server : public QWidget
+class Server : public QObject
 {
     Q_OBJECT
 
@@ -29,14 +29,19 @@ class Server : public QWidget
         void startServer();
         void startGame();
         void stopServer();
-        void sendToAsleep(QString command);
-        void sendToAwoken(QString command);
         void sendToAll(QString command);
         void commandProcess(Command &cmd);
         void update();
         virtual void writeALog(const QString& log, LogType c);
 
+        /***********/
+        /* GETTERS */
+        /***********/
+        bool isStarted() const;
         CommandManager getCommandManager() const;
+
+    signals:
+        void serverStateChange();
 
     protected slots:
         void onNewConnection();
@@ -44,7 +49,6 @@ class Server : public QWidget
         void onConnectionLost();
 
     protected:
-
         bool checkConnexion();
         Client* getClientBySocket(QTcpSocket*);
         QTcpServer *m_server;
