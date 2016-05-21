@@ -7,7 +7,7 @@
 #include "includes/command.h"
 #include <cstddef>
 
-class ServerWindow : public Server, private Ui::ServerWindow
+class ServerWindow : public QWidget, private Ui::ServerWindow
 {
     Q_OBJECT
 
@@ -17,9 +17,15 @@ class ServerWindow : public Server, private Ui::ServerWindow
 
     public slots:
         void sendCommand();
+        void onServerStateChange();
+        void onStartServerButtonClicked();
+        void onStopServerButtonClicked();
+        void onClearButtonClicked();
+        void onCursorPositionChanged();
 
     private:
         virtual void writeALog(const QString&, LogType c);
+        Server *m_server;
 
 };
 
