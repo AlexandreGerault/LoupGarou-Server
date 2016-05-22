@@ -39,6 +39,6 @@ CommandManager::~CommandManager()
     for(QMap<QString, Command*>::const_iterator it = m_commands.begin(); it!= m_commands.end(); it++)
     {
         delete *it;
-        m_commands.remove(it.key());
     }
+    m_commands.clear();
 }
