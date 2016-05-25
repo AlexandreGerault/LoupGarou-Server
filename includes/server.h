@@ -12,7 +12,6 @@
 #include <iostream>
 #include <algorithm>
 #include "client.h"
-#include "parser.h"
 #include <QDebug>
 #include "includes/commandmanager.h"
 
@@ -32,16 +31,17 @@ class Server : public QObject
         void sendToAll(QString command);
         void commandProcess(Command &cmd);
         void update();
-        virtual void writeALog(const QString& log, LogType c);
+        virtual void writeALog(const QString& logMessage, LogType c);
 
         /***********/
         /* GETTERS */
         /***********/
         bool isStarted() const;
-        CommandManager getCommandManager() const;
+        const CommandManager& getCommandManager();
 
     signals:
         void serverStateChange();
+        void log(QString, LogType);
 
     protected slots:
         void onNewConnection();

@@ -3,11 +3,10 @@
 Server::Server() : m_logFile("logs.txt"), m_tailleMessage(0), m_serverStarted(false)
 {
     m_server = new QTcpServer(this);
-    std::cout << "Construction d'un objet Server\n";
     startServer();
 }
 
-void Server::writeALog(const QString &log, LogType c)
+void Server::writeALog(const QString &logMessage, LogType c)
 {
     QString type;
 
@@ -18,7 +17,9 @@ void Server::writeALog(const QString &log, LogType c)
         case LogType::Send:    type = "send";    break;
         case LogType::Warning: type = "warning"; break;
     }
-    QString message = "[" + type.toUpper() + "] " + log;
+    QString message = "[" + QDateTime::currentDateTime().toString("H:m:s") + "] [" + type.toUpper() + "] " + logMessage;
+
+    emit log(message, c);
 
     std::cout << message.toStdString() << std::endl;
 }
@@ -145,7 +146,12 @@ void Server::onConnectionLost()
 
 void Server::commandProcess(Command &cmd)
 {
-    cmd.execute(this);
+    try {
+        cmd.execute(this);
+    } catch(QString error) {
+        writeALog(error, LogType::Error);
+    }
+
 }
 
 void Server::sendToAll(QString message)
@@ -171,7 +177,7 @@ Client * Server::getClientBySocket( QTcpSocket * sock )
     return *it;
 }
 
-CommandManager Server::getCommandManager() const
+const CommandManager& Server::getCommandManager()
 {
     return m_commandManager;
 }
