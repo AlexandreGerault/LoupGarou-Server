@@ -8,7 +8,7 @@ class HelpCommand : public Command
 {
     public:
         HelpCommand();
-        virtual void execute(Server *s);
+        void execute(Server *s) override;
 
     private:
 
