@@ -14,8 +14,8 @@ class Command
         virtual ~Command() = default;
 
         virtual void execute(Server *s) = 0;
-        virtual QString getName() const;
-        virtual QString getDescription() const;
+        QString getName() const;
+        QString getDescription() const;
 
     protected:
         QString m_name;
