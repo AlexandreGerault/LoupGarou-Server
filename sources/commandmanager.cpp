@@ -26,11 +26,7 @@ Command* CommandManager::getCommand(QString label) const
 
 QList<Command*> CommandManager::getCommands() const
 {
-    QList<Command*> cmds;
-    for(auto it = m_commands.begin(); it!= m_commands.end(); it++)
-    {
-        cmds.append(*it);
-    }
+    QList<Command*> cmds = m_commands.values();
     return cmds;
 }
 
