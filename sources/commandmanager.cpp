@@ -13,7 +13,7 @@ CommandManager::CommandManager()
 
 Command* CommandManager::getCommand(QString label) const
 {
-    for(QMap<QString, Command*>::const_iterator it = m_commands.begin(); it!= m_commands.end(); it++)
+    for(auto it = m_commands.begin(); it!= m_commands.end(); it++)
     {
         if(label == it.key())
         {
@@ -27,7 +27,7 @@ Command* CommandManager::getCommand(QString label) const
 QList<Command*> CommandManager::getCommands() const
 {
     QList<Command*> cmds;
-    for(QMap<QString, Command*>::const_iterator it = m_commands.begin(); it!= m_commands.end(); it++)
+    for(auto it = m_commands.begin(); it!= m_commands.end(); it++)
     {
         cmds.append(*it);
     }
@@ -36,7 +36,7 @@ QList<Command*> CommandManager::getCommands() const
 
 CommandManager::~CommandManager()
 {
-    for(QMap<QString, Command*>::const_iterator it = m_commands.begin(); it!= m_commands.end(); it++)
+    for(auto it = m_commands.begin(); it!= m_commands.end(); it++)
     {
         delete *it;
     }
