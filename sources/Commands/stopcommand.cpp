@@ -1,13 +1,14 @@
 #include "includes/Commands/stopcommand.h"
 #include "includes/server.h"
 
-StopCommand::StopCommand()
+StopCommand::StopCommand() : Command("stop", "Cette commande sert à éteindre le serveur.")
 {
-    m_name = "stop";
-    m_description = "Cette commande sert à éteindre le serveur.";
 }
 
 void StopCommand::execute(Server *s)
 {
-    s->stopServer();
+    if(s != NULL)
+        s->stopServer();
+    else
+        throw QString("Erreur : pointeur de serveur null");
 }

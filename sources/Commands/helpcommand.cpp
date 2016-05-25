@@ -1,18 +1,23 @@
 #include "includes/Commands/helpcommand.h"
 #include "includes/server.h"
 
-HelpCommand::HelpCommand()
+HelpCommand::HelpCommand() : Command("help", "Obtenir de l'aide")
 {
-    m_name = "help";
-    m_description = "Permet d'obtenir la liste des commandes et leur description correspondante.";
 }
 
 void HelpCommand::execute(Server *s)
 {
-    QList<Command*> commands = s->getCommandManager().getCommands();
-
-    for(Command *c : commands)
+    if(s != NULL)
     {
-        s->writeALog(c->getName() + " - " + c->getDescription(), LogType::Info);
+        QList<Command*> commands = s->getCommandManager().getCommands();
+
+        for(Command *c : commands)
+        {
+            s->writeALog(c->getName().toUpper() + " - " + c->getDescription(), LogType::Info);
+        }
+    }
+    else
+    {
+        throw QString("Erreur : pointeur de serveur null");
     }
 }

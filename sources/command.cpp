@@ -3,12 +3,10 @@
 
 Command::Command()
 {
-
 }
 
-void Command::execute(Server *s)
+Command::Command(QString name, QString description) : m_name(name), m_description(description)
 {
-    std::cout << "Fail";
 }
 
 QString Command::getName() const

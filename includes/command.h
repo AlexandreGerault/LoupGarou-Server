@@ -3,7 +3,6 @@
 
 #include <QList>
 #include <QString>
-#include <iostream>
 
 class Server;
 
@@ -11,6 +10,7 @@ class Command
 {
     public:
         Command();
+        Command(QString name, QString description);
         virtual ~Command() = default;
 
         virtual void execute(Server *s) = 0;
@@ -20,6 +20,7 @@ class Command
     protected:
         QString m_name;
         QString m_description;
+
         QList<QString> m_aliases;
         int grade;
 };
