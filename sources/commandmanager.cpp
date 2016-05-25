@@ -6,9 +6,9 @@ CommandManager::CommandManager()
     Command *startCmd = new StartCommand;
     Command *stopCmd  = new StopCommand;
 
-    m_commands.insert("start", startCmd);
-    m_commands.insert("stop",  stopCmd);
-    m_commands.insert("help",  helpCmd);
+    m_commands.insert(startCmd->getName(), startCmd);
+    m_commands.insert(stopCmd->getName(),  stopCmd);
+    m_commands.insert(helpCmd->getName(),  helpCmd);
 }
 
 Command* CommandManager::getCommand(QString label) const

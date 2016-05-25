@@ -17,12 +17,18 @@ ServerWindow::ServerWindow()
     connect(m_sendCommandButton, SIGNAL(clicked()), this, SLOT(sendCommand()));
     connect(m_commandLineEditor, SIGNAL(returnPressed()), this, SLOT(sendCommand()));
     connect(m_server, SIGNAL(serverStateChange()), this, SLOT(onServerStateChange()));
+    connect(m_server, SIGNAL(log(QString, LogType)), this, SLOT(onLog(QString, LogType)));
     connect(m_startButton, SIGNAL(clicked(bool)), this, SLOT(onStartServerButtonClicked()));
     connect(m_stopButton, SIGNAL(clicked(bool)), this, SLOT(onStopServerButtonClicked()));
     connect(m_clearButton, SIGNAL(clicked(bool)), this, SLOT(onClearButtonClicked()));
     connect(m_logsList, SIGNAL(cursorPositionChanged()), this, SLOT(onCursorPositionChanged()));
 
     m_commandLineEditor->setFocus();
+}
+
+void ServerWindow::onLog(QString message, LogType c)
+{
+    writeALog(message, c);
 }
 
 void ServerWindow::writeALog(const QString &log, LogType c)
@@ -51,7 +57,7 @@ void ServerWindow::writeALog(const QString &log, LogType c)
             type = "warning";
         break;
     }
-    QString message = "<span style=\"" + style + "\">[" + type.toUpper() + "] " + log + "</span><br />";
+    QString message = "<span style=\"" + style + "\"> " + log + "</span><br />";
 
     m_logsList->insertHtml(message);
 }
@@ -102,16 +108,11 @@ void ServerWindow::onClearButtonClicked()
 }
 void ServerWindow::onCursorPositionChanged()
 {
-    std::cout << "Cursor changed\n";
-    if(m_logsList->textCursor().movePosition(QTextCursor::End, QTextCursor::KeepAnchor, 20)){
-    std::cout << "Cursor successfully moved";
-    m_logsList->setFocus();
-    }
-
 }
 
 ServerWindow::~ServerWindow()
 {
+    delete m_server;
 }
 
 

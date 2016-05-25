@@ -19,7 +19,6 @@ CONFIG += console
 SOURCES += sources/main.cpp\
     sources/client.cpp \
     sources/serverwindow.cpp \
-    sources/parser.cpp \
     sources/command.cpp \
     sources/commandmanager.cpp \
     sources/server.cpp \
@@ -30,7 +29,6 @@ SOURCES += sources/main.cpp\
 HEADERS  += \
     includes/client.h \
     includes/serverwindow.h \
-    includes/parser.h \
     includes/command.h \
     includes/commandmanager.h \
     includes/server.h \

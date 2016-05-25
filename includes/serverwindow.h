@@ -22,6 +22,7 @@ class ServerWindow : public QWidget, private Ui::ServerWindow
         void onStopServerButtonClicked();
         void onClearButtonClicked();
         void onCursorPositionChanged();
+        void onLog(QString const, LogType const);
 
     private:
         virtual void writeALog(const QString&, LogType c);
