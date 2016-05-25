@@ -8,7 +8,7 @@ class StopCommand : public Command
 {
     public:
         StopCommand();
-        virtual void execute(Server *s);
+        void execute(Server *s) override;
 
     private:
 
