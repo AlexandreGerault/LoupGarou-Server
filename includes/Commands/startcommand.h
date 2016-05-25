@@ -8,7 +8,7 @@ class StartCommand : public Command
 {
     public:
         StartCommand();
-        virtual void execute(Server *s);
+        void execute(Server *s) override;
 
     private:
 
