@@ -53,7 +53,7 @@ class Server : public QObject
         Client* getClientBySocket(QTcpSocket*);
         QTcpServer *m_server;
         QList<Client*> m_clients;
-        quint16 m_tailleMessage;
+        quint16 m_messageSize;
         QFile m_logFile;
         QTimer *m_timer;
         QTextStream *m_logger;

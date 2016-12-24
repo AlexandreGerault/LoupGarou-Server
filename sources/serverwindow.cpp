@@ -2,9 +2,9 @@
 
 ServerWindow::ServerWindow()
 {
-    m_server = new Server;
-
     setupUi(this);
+
+    m_server = new Server;
 
     QString labelContent("État du serveur : ");
     if(m_server->isStarted())

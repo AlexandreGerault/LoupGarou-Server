@@ -5,10 +5,12 @@ CommandManager::CommandManager()
     Command *helpCmd  = new HelpCommand;
     Command *startCmd = new StartCommand;
     Command *stopCmd  = new StopCommand;
+    Command *listCmd = new ListCommand;
 
     m_commands.insert(startCmd->getName(), startCmd);
     m_commands.insert(stopCmd->getName(),  stopCmd);
     m_commands.insert(helpCmd->getName(),  helpCmd);
+    m_commands.insert(listCmd->getName(), listCmd);
 }
 
 Command* CommandManager::getCommand(QString label) const

@@ -1,6 +1,6 @@
 #include "includes/server.h"
 
-Server::Server() : m_logFile("logs.txt"), m_tailleMessage(0), m_serverStarted(false)
+Server::Server() : m_logFile("logs.txt"), m_messageSize(0), m_serverStarted(false)
 {
     m_server = new QTcpServer(this);
     startServer();
@@ -17,7 +17,7 @@ void Server::writeALog(const QString &logMessage, LogType c)
         case LogType::Send:    type = "send";    break;
         case LogType::Warning: type = "warning"; break;
     }
-    QString message = "[" + QDateTime::currentDateTime().toString("H:m:s") + "] [" + type.toUpper() + "] " + logMessage;
+    QString message = "[" + QDateTime::currentDateTime().toString("HH:mm:ss") + "] [" + type.toUpper() + "] " + logMessage;
 
     emit log(message, c);
 
@@ -92,7 +92,6 @@ void Server::onNewConnection()
     QTcpSocket *newClientSocket = m_server->nextPendingConnection();
     Client *newClient = new Client(newClientSocket);
     newClient->setPseudo("NewClient");
-    newClient->setSocket(newClientSocket);
 
     m_clients << newClient;
     connect(newClient->getSocket(), SIGNAL(readyRead()), this, SLOT(dataReceived()));
@@ -111,14 +110,14 @@ void Server::dataReceived()
 
     //Receive the data size (the first 16 bits)
     //The Slot is called each sub-packet received
-    if(m_tailleMessage == 0)
+    if(m_messageSize == 0)
     {
         if(socket->bytesAvailable() < (int)sizeof(quint16)) return;
-        in >> m_tailleMessage;
+        in >> m_messageSize;
     }
 
     //if we don't have the whole data
-    if(socket->bytesAvailable() < m_tailleMessage)
+    if(socket->bytesAvailable() < m_messageSize)
         return;
 
     QString data;
@@ -130,14 +129,19 @@ void Server::dataReceived()
 void Server::onConnectionLost()
 {
     QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
-    if(socket == 0)
+    if(socket == 0){
+        writeALog("Client not found \n", LogType::Info);
         return;
+    }
     Client *c = getClientBySocket(socket);
 
-    std::cout << c->pseudo().toStdString() << " has been disconnected.\n";
+    writeALog(c->pseudo() + " has been disconnected.\n", LogType::Info);
+    c->getSocket()->close();
+    QString name = c->pseudo();
     m_clients.removeOne(c);
     c->getSocket()->deleteLater();
     delete c;
+    writeALog(name + " has been removed.\n", LogType::Info);
 }
 
 /***********************
@@ -166,7 +170,7 @@ Client * Server::getClientBySocket( QTcpSocket * sock )
 {
     auto it = std::find_if( m_clients.cbegin(), m_clients.cend(), [&sock]( Client const * const c )
     {
-            return c->getSocket() == sock;
+        return c->getSocket() == sock;
     });
 
     if(it == m_clients.end())

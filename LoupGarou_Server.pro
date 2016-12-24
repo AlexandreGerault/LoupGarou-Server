@@ -7,7 +7,7 @@
 QT       += core gui \
             core gui network
 
-CONFIG += console
+CONFIG += console \ c++14
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -24,7 +24,8 @@ SOURCES += sources/main.cpp\
     sources/server.cpp \
     sources/Commands/startcommand.cpp \
     sources/Commands/helpcommand.cpp \
-    sources/Commands/stopcommand.cpp
+    sources/Commands/stopcommand.cpp \
+    sources/Commands/listcommand.cpp
 
 HEADERS  += \
     includes/client.h \
@@ -34,7 +35,8 @@ HEADERS  += \
     includes/server.h \
     includes/Commands/startcommand.h \
     includes/Commands/helpcommand.h \
-    includes/Commands/stopcommand.h
+    includes/Commands/stopcommand.h \
+    includes/Commands/listcommand.h
 
 FORMS    += \
     serverwindow.ui

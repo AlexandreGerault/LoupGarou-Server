@@ -6,6 +6,7 @@
 #include "includes/Commands/startcommand.h"
 #include "includes/Commands/stopcommand.h"
 #include "includes/Commands/helpcommand.h"
+#include "includes/Commands/listcommand.h"
 
 class CommandManager
 {
