@@ -31,6 +31,7 @@ class Server : public QObject
         void commandProcess(Command &cmd);
         void update();
         Logger *logger();
+        QList<Client*> clients();
 
         /***********/
         /* GETTERS */

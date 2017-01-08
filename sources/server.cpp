@@ -68,12 +68,13 @@ void Server::onNewConnection()
     m_logger->log("Un nouveau client vient de se connecter", LogType::Info);
 
     QTcpSocket *newClientSocket = m_server->nextPendingConnection();
-    Client *newClient = new Client;
-    newClient->setPseudo("NewClient");
-
-    m_clients.insert(m_clients.end(), newClientSocket, newClient);
     connect(newClientSocket, SIGNAL(readyRead()), this, SLOT(dataReceived()));
     connect(newClientSocket, SIGNAL(disconnected()), this, SLOT(onConnectionLost()));
+
+    Client *newClient = new Client;
+    newClient->setPseudo("");
+
+    m_clients.insert(m_clients.end(), newClientSocket, newClient);
 }
 
 void Server::dataReceived()
@@ -101,7 +102,7 @@ void Server::dataReceived()
     QString data;
     in >> data;
 
-    m_logger->log(c->pseudo() + "] " + data, LogType::Send);
+    m_logger->log("[" + c->pseudo() + "] " + data, LogType::Data);
 }
 
 void Server::onConnectionLost()
@@ -151,8 +152,8 @@ Client * Server::getClientBySocket(QTcpSocket * sock)
 {
     auto client = m_clients.find(sock);
     Client *c = *client;
-    std::cout << c->pseudo().toStdString();
-    return *client;
+    std::cout << c->pseudo().toStdString() << std::endl;
+    return c;
 }
 
 const CommandManager& Server::getCommandManager()
@@ -163,6 +164,11 @@ const CommandManager& Server::getCommandManager()
 bool Server::isStarted() const
 {
     return m_serverStarted;
+}
+
+QList<Client*> Server::clients()
+{
+    return m_clients.values();
 }
 
 Server::~Server()

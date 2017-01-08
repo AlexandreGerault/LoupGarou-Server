@@ -10,7 +10,7 @@
 #include <QTextStream>
 #include <QTimer>
 
-enum class LogType {Info, Warning, Error, Send};
+enum class LogType {Info, Warning, Error, Send, Data};
 
 class Logger : public QObject
 {

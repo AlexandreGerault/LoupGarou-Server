@@ -39,6 +39,7 @@ void Logger::log(QString log, LogType logType)
         case LogType::Error:   type = "error";   break;
         case LogType::Send:    type = "send";    break;
         case LogType::Warning: type = "warning"; break;
+        case LogType::Data:    type= "data";     break;
     }
     QString message = "[" + QDateTime::currentDateTime().toString("HH:mm:ss") + "] [" + type.toUpper() + "] " + log;
     emit logging(message, logType);
