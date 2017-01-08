@@ -15,12 +15,13 @@ enum class LogType {Info, Warning, Error, Send};
 class Logger : public QObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(Logger)
 
     public:
         static Logger* Instance();
         static void kill();
 
-        bool openLogFile(std::string logFile);
+        bool openLogFile();
         bool closeLogFile();
         void log(QString log, LogType logType);
 
@@ -28,14 +29,11 @@ class Logger : public QObject
         void logging(QString, LogType);
 
     public slots:
-        void writeToLogFile(QString log, LogType logType);
+        void writeToLogFile(QString log);
 
     private:
         Logger();
         ~Logger(){};
-
-        Logger(Logger const&){};
-        Logger& operator=(Logger const&){}
 
         static Logger *m_pInstance;
         QFile m_logFile;

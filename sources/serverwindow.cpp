@@ -5,7 +5,6 @@ ServerWindow::ServerWindow()
     setupUi(this);
 
     m_server = new Server;
-    m_logger = Logger::Instance();
 
     QString labelContent("État du serveur : ");
     if(m_server->isStarted())
@@ -18,7 +17,7 @@ ServerWindow::ServerWindow()
     connect(m_sendCommandButton, SIGNAL(clicked()), this, SLOT(sendCommand()));
     connect(m_commandLineEditor, SIGNAL(returnPressed()), this, SLOT(sendCommand()));
     connect(m_server, SIGNAL(serverStateChange()), this, SLOT(onServerStateChange()));
-    connect(m_logger, SIGNAL(logging(QString,LogType)), this, SLOT(onLog(QString, LogType)));
+    connect(m_server->logger(), SIGNAL(logging(QString,LogType)), this, SLOT(onLog(QString, LogType)));
     connect(m_startButton, SIGNAL(clicked(bool)), this, SLOT(onStartServerButtonClicked()));
     connect(m_stopButton, SIGNAL(clicked(bool)), this, SLOT(onStopServerButtonClicked()));
     connect(m_clearButton, SIGNAL(clicked(bool)), this, SLOT(onClearButtonClicked()));
@@ -67,7 +66,7 @@ void ServerWindow::sendCommand()
 {
     QString command = m_commandLineEditor->text();
 
-    m_logger->log(command, LogType::Send);
+    m_server->logger()->log(command, LogType::Send);
     m_commandLineEditor->clear();
 
     QStringList cmdArgs = command.split("[ ]");
@@ -79,7 +78,7 @@ void ServerWindow::sendCommand()
     }
     catch(QString e)
     {
-        m_logger->log(e, LogType::Error);
+        m_server->logger()->log(e, LogType::Error);
     }
 }
 
@@ -92,7 +91,6 @@ void ServerWindow::onServerStateChange()
         labelContent += "<span style=\"color: red;\">OFF</span>";
 
     m_serverStateLabel->setText(labelContent);
-
 }
 
 void ServerWindow::onStartServerButtonClicked()

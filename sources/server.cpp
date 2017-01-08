@@ -8,7 +8,12 @@ Server::Server() : m_messageSize(0), m_serverStarted(false)
     startServer();
 }
 
-void Server::onLog(const QString log)
+Logger *Server::logger()
+{
+    return m_logger;
+}
+
+void Server::onLog(const QString& log)
 {
     std::cout << log.toStdString() << std::endl;
 }
@@ -125,9 +130,8 @@ void Server::onConnectionLost()
 }
 
 /***********************
- * protected functions *
+ * Protected functions *
  ***********************/
-
 void Server::commandProcess(Command &cmd)
 {
     try {

@@ -8,5 +8,6 @@ ListCommand::ListCommand() : Command("list", "Cette commande liste les serveurs 
 
 void ListCommand::execute(Server *s)
 {
+    s->isStarted();
     return;
 }

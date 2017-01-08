@@ -5,6 +5,8 @@ Logger *Logger::m_pInstance = NULL;
 Logger::Logger() : m_logFile("logs.txt"), m_stream(&m_logFile)
 {
     connect(this, SIGNAL(logging(QString,LogType)), this , SLOT(writeToLogFile(QString,LogType)));
+    if(!openLogFile())
+        throw("Le fichier journal n'a pas été chargé");
 }
 
 Logger* Logger::Instance()
@@ -15,13 +17,10 @@ Logger* Logger::Instance()
     return m_pInstance;
 }
 
-bool Logger::openLogFile(std::string logFile)
+bool Logger::openLogFile()
 {
     if(!m_logFile.open(QIODevice::ReadWrite | QIODevice::Text))
-    {
-        std::cout << "Le fichier journal n'a pas été chargé." << std::endl;
         return false;
-    }
     return true;
 }
 
@@ -45,14 +44,16 @@ void Logger::log(QString log, LogType logType)
     emit logging(message, logType);
 }
 
-void Logger::writeToLogFile(QString log, LogType logType)
+void Logger::writeToLogFile(QString log)
 {
     m_stream << log << "\n";
 }
 
 void Logger::kill()
 {
-
+    if(m_pInstance != NULL)
+    {
+        delete m_pInstance;
+        m_pInstance = NULL;
+    }
 }
-
-

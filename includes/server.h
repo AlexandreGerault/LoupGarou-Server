@@ -30,6 +30,7 @@ class Server : public QObject
         void sendToAll(QString command);
         void commandProcess(Command &cmd);
         void update();
+        Logger *logger();
 
         /***********/
         /* GETTERS */
@@ -44,7 +45,7 @@ class Server : public QObject
         void onNewConnection();
         void dataReceived();
         void onConnectionLost();
-        void onLog(QString log);
+        void onLog(const QString& log);
 
     protected:
         Logger *m_logger;
