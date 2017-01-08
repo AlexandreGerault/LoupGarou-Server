@@ -34,5 +34,4 @@ int Client::grade() const
 
 void Client::send(QString command)
 {
-
 }

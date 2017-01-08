@@ -25,7 +25,8 @@ class ServerWindow : public QWidget, private Ui::ServerWindow
         void onLog(QString const, LogType const);
 
     private:
-        virtual void writeALog(const QString&, LogType c);
+        void writeALog(const QString&, LogType c);
+        Logger *m_logger;
         Server *m_server;
 
 };

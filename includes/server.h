@@ -12,10 +12,9 @@
 #include <iostream>
 #include <algorithm>
 #include "client.h"
+#include "logger.h"
 #include <QDebug>
 #include "includes/commandmanager.h"
-
-enum class LogType {Info, Warning, Error, Send};
 
 class Server : public QObject
 {
@@ -31,7 +30,6 @@ class Server : public QObject
         void sendToAll(QString command);
         void commandProcess(Command &cmd);
         void update();
-        virtual void writeALog(const QString& logMessage, LogType c);
 
         /***********/
         /* GETTERS */
@@ -41,22 +39,21 @@ class Server : public QObject
 
     signals:
         void serverStateChange();
-        void log(QString, LogType);
 
     protected slots:
         void onNewConnection();
         void dataReceived();
         void onConnectionLost();
+        void onLog(QString log);
 
     protected:
+        Logger *m_logger;
         bool checkConnexion();
         Client* getClientBySocket(QTcpSocket*);
         QTcpServer *m_server;
         QList<Client*> m_clients;
         quint16 m_messageSize;
-        QFile m_logFile;
         QTimer *m_timer;
-        QTextStream *m_logger;
         bool m_serverStarted;
         CommandManager m_commandManager;
 };

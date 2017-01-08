@@ -4,7 +4,11 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui \
+            core gui network
+
+
+CONFIG += console \ c++14
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -22,10 +26,30 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+SOURCES += sources/main.cpp\
+    sources/client.cpp \
+    sources/serverwindow.cpp \
+    sources/command.cpp \
+    sources/commandmanager.cpp \
+    sources/server.cpp \
+    sources/Commands/startcommand.cpp \
+    sources/Commands/helpcommand.cpp \
+    sources/Commands/stopcommand.cpp \
+    sources/Commands/listcommand.cpp \
+    sources/logger.cpp
 
-SOURCES += main.cpp\
-        mainwindow.cpp
+HEADERS  += \
+    includes/client.h \
+    includes/serverwindow.h \
+    includes/command.h \
+    includes/commandmanager.h \
+    includes/server.h \
+    includes/Commands/startcommand.h \
+    includes/Commands/helpcommand.h \
+    includes/Commands/stopcommand.h \
+    includes/Commands/listcommand.h \
+    includes/logger.h
 
-HEADERS  += mainwindow.h
 
-FORMS    += mainwindow.ui
+FORMS    += \
+    serverwindow.ui
