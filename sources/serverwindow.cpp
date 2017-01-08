@@ -18,8 +18,6 @@ ServerWindow::ServerWindow()
     connect(m_commandLineEditor, SIGNAL(returnPressed()), this, SLOT(sendCommand()));
     connect(m_server, SIGNAL(serverStateChange()), this, SLOT(onServerStateChange()));
     connect(m_server->logger(), SIGNAL(logging(QString,LogType)), this, SLOT(onLog(QString, LogType)));
-    connect(m_startButton, SIGNAL(clicked(bool)), this, SLOT(onStartServerButtonClicked()));
-    connect(m_stopButton, SIGNAL(clicked(bool)), this, SLOT(onStopServerButtonClicked()));
     connect(m_clearButton, SIGNAL(clicked(bool)), this, SLOT(onClearButtonClicked()));
     connect(m_logsList, SIGNAL(cursorPositionChanged()), this, SLOT(onCursorPositionChanged()));
 
@@ -91,15 +89,6 @@ void ServerWindow::onServerStateChange()
         labelContent += "<span style=\"color: red;\">OFF</span>";
 
     m_serverStateLabel->setText(labelContent);
-}
-
-void ServerWindow::onStartServerButtonClicked()
-{
-    m_server->startServer();
-}
-void ServerWindow::onStopServerButtonClicked()
-{
-    m_server->stopServer();
 }
 void ServerWindow::onClearButtonClicked()
 {

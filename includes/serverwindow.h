@@ -18,8 +18,6 @@ class ServerWindow : public QWidget, private Ui::ServerWindow
     public slots:
         void sendCommand();
         void onServerStateChange();
-        void onStartServerButtonClicked();
-        void onStopServerButtonClicked();
         void onClearButtonClicked();
         void onCursorPositionChanged();
         void onLog(QString const, LogType const);

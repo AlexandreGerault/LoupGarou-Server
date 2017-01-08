@@ -32,7 +32,6 @@ SOURCES += sources/main.cpp\
     sources/command.cpp \
     sources/commandmanager.cpp \
     sources/server.cpp \
-    sources/Commands/startcommand.cpp \
     sources/Commands/helpcommand.cpp \
     sources/Commands/stopcommand.cpp \
     sources/Commands/listcommand.cpp \
@@ -44,7 +43,6 @@ HEADERS  += \
     includes/command.h \
     includes/commandmanager.h \
     includes/server.h \
-    includes/Commands/startcommand.h \
     includes/Commands/helpcommand.h \
     includes/Commands/stopcommand.h \
     includes/Commands/listcommand.h \

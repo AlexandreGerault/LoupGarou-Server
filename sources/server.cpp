@@ -4,21 +4,6 @@ Server::Server() : m_logger(Logger::Instance()), m_messageSize(0), m_serverStart
 {
     m_server = new QTcpServer(this);
     connect(m_logger, SIGNAL(logging(QString,LogType)), this, SLOT(onLog(QString)));
-    startServer();
-}
-
-Logger *Server::logger()
-{
-    return m_logger;
-}
-
-void Server::onLog(const QString& log)
-{
-    std::cout << log.toStdString() << std::endl;
-}
-
-void Server::startServer()
-{
     if(!m_serverStarted)
     {
         m_logger->log("Démarrage du serveur", LogType::Info);
@@ -39,6 +24,16 @@ void Server::startServer()
         m_logger->log("Le serveur est déjà lancé", LogType::Error);
 }
 
+Logger *Server::logger()
+{
+    return m_logger;
+}
+
+void Server::onLog(const QString& log)
+{
+    std::cout << log.toStdString() << std::endl;
+}
+
 void Server::startGame()
 {
     sendToAll("say The game is started");
@@ -52,7 +47,6 @@ void Server::stopServer()
         m_serverStarted = false;
         m_logger->log("Arrêt du serveur.", LogType::Info);
         m_server->close();
-        emit serverStateChange();
     }
     else
     {
