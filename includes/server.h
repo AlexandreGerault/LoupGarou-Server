@@ -52,7 +52,7 @@ class Server : public QObject
         bool checkConnexion();
         Client* getClientBySocket(QTcpSocket*);
         QTcpServer *m_server;
-        QList<Client*> m_clients;
+        QMap<QTcpSocket*, Client*> m_clients;
         quint16 m_messageSize;
         QTimer *m_timer;
         bool m_serverStarted;

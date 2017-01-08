@@ -74,12 +74,12 @@ void Server::onNewConnection()
     m_logger->log("Un nouveau client vient de se connecter", LogType::Info);
 
     QTcpSocket *newClientSocket = m_server->nextPendingConnection();
-    Client *newClient = new Client(newClientSocket);
+    Client *newClient = new Client;
     newClient->setPseudo("NewClient");
 
-    m_clients << newClient;
-    connect(newClient->getSocket(), SIGNAL(readyRead()), this, SLOT(dataReceived()));
-    connect(newClient->getSocket(), SIGNAL(disconnected()), this, SLOT(onConnectionLost()));
+    m_clients.insert(m_clients.end(), newClientSocket, newClient);
+    connect(newClientSocket, SIGNAL(readyRead()), this, SLOT(dataReceived()));
+    connect(newClientSocket, SIGNAL(disconnected()), this, SLOT(onConnectionLost()));
 }
 
 void Server::dataReceived()
@@ -117,14 +117,19 @@ void Server::onConnectionLost()
         m_logger->log("Client not found \n", LogType::Info);
         return;
     }
-    Client *c = getClientBySocket(socket);
 
-    m_logger->log(c->pseudo() + " has been disconnected.\n", LogType::Info);
-    c->getSocket()->close();
+    Client *c = getClientBySocket(socket);
     QString name = c->pseudo();
-    m_clients.removeOne(c);
-    c->getSocket()->deleteLater();
+    m_logger->log(c->pseudo() + " has been disconnected.\n", LogType::Info);
+
+    //We delete the socket
+    socket->close();            //Closing socket
+    m_clients.remove(socket);   //Remove from QMap
+    socket->deleteLater();      //Finnaly delete it
+
+    //Then we delete the client which was attached
     delete c;
+
     m_logger->log(name + " has been removed.\n", LogType::Info);
 }
 
@@ -138,7 +143,6 @@ void Server::commandProcess(Command &cmd)
     } catch(QString error) {
         m_logger->log(error, LogType::Error);
     }
-
 }
 
 void Server::sendToAll(QString message)
@@ -149,19 +153,12 @@ void Server::sendToAll(QString message)
     }
 }
 
-Client * Server::getClientBySocket( QTcpSocket * sock )
+Client * Server::getClientBySocket(QTcpSocket * sock)
 {
-    auto it = std::find_if( m_clients.cbegin(), m_clients.cend(), [&sock]( Client const * const c )
-    {
-        return c->getSocket() == sock;
-    });
-
-    if(it == m_clients.end())
-    {
-        throw std::runtime_error( "Client not found." );
-    }
-
-    return *it;
+    auto client = m_clients.find(sock);
+    Client *c = *client;
+    std::cout << c->pseudo().toStdString();
+    return *client;
 }
 
 const CommandManager& Server::getCommandManager()

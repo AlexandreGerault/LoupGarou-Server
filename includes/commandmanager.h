@@ -11,8 +11,16 @@
 class CommandManager
 {
     public:
+        /***************
+        * Entity class *
+        ****************/
         CommandManager();
-        ~CommandManager();
+        CommandManager(CommandManager const&) = delete;
+        CommandManager& operator=(CommandManager&) = delete;
+        bool operator==(CommandManager const&) = delete;
+        bool operator!=(CommandManager const&) = delete;
+
+        virtual ~CommandManager();
 
         Command* getCommand(QString label) const;
         QList<Command*> getCommands() const;

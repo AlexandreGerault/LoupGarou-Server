@@ -3,12 +3,12 @@
 
 #include <QObject>
 #include <QtNetwork/QtNetwork>
+#include <memory>
 
 class Client
 {
     public:
-        Client(QTcpSocket* socket);
-        QTcpSocket* getSocket() const;
+        Client();
         QString pseudo() const;
         int grade() const;
 
@@ -20,7 +20,6 @@ class Client
 
     private:
         QString m_pseudo;
-        QTcpSocket *m_socket;
         int m_grade;
 
 };

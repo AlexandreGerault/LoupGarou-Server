@@ -1,8 +1,7 @@
 #include "includes/client.h"
 
-Client::Client(QTcpSocket* socket)
+Client::Client()
 {
-    m_socket = socket;
 }
 
 void Client::setPseudo(QString pseudo)
@@ -13,16 +12,6 @@ QString Client::pseudo() const
 {
     return m_pseudo;
 }
-
-void Client::setSocket(QTcpSocket *socket)
-{
-    m_socket = socket;
-}
-QTcpSocket* Client::getSocket() const
-{
-    return m_socket;
-}
-
 void Client::setGrade(int grade)
 {
     m_grade = grade;

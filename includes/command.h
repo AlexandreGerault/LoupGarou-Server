@@ -9,6 +9,9 @@ class Server;
 class Command
 {
     public:
+        /***************
+        * Entity class *
+        ****************/
         Command();
         Command(QString name, QString description);
         virtual ~Command() = default;
