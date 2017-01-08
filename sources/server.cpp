@@ -1,8 +1,7 @@
 #include "includes/server.h"
 
-Server::Server() : m_messageSize(0), m_serverStarted(false)
+Server::Server() : m_logger(Logger::Instance()), m_messageSize(0), m_serverStarted(false)
 {
-    m_logger = Logger::Instance();
     m_server = new QTcpServer(this);
     connect(m_logger, SIGNAL(logging(QString,LogType)), this, SLOT(onLog(QString)));
     startServer();
