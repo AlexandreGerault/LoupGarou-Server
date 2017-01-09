@@ -9,11 +9,9 @@ ListCommand::ListCommand() : Command("list", "Cette commande liste les serveurs 
 void ListCommand::execute(Server *s)
 {
     int i = 0;
-    for(auto it = s->clients().begin(); it!= s->clients().end(); it++)
+    for(Client* c : m_clients)
     {
         i++;
-        Client* c = *it;
-
         s->logger()->log("Client " + QString::number(i), LogType::Info);
         s->logger()->log("----------------------------", LogType::Info);
         s->logger()->log("Pseudo: " + c->pseudo() + "", LogType::Info);
