@@ -87,21 +87,22 @@ void Server::dataReceived()
     Client *c = getClientBySocket(socket);
     QDataStream in(socket);
 
-    //Receive the data size (the first 16 bits)
-    //The Slot is called each sub-packet received
-    if(m_messageSize == 0)
-    {
-        if(socket->bytesAvailable() < (int)sizeof(quint16)) return;
-        in >> m_messageSize;
+    while(true){
+        //Receive the data size (the first 16 bits)
+        //The Slot is called each sub-packet received
+        if(m_messageSize == 0)
+        {
+            if(socket->bytesAvailable() < (int)sizeof(quint16)) return;
+            in >> m_messageSize;
+        }
+
+        //if we don't have the whole data
+        if(socket->bytesAvailable() < m_messageSize)
+            return;
+
+        QString data;
+        in >> data;
     }
-
-    //if we don't have the whole data
-    if(socket->bytesAvailable() < m_messageSize)
-        return;
-
-    QString data;
-    in >> data;
-
     m_logger->log("[" + c->pseudo() + "] " + data, LogType::Data);
 }
 
