@@ -44,18 +44,14 @@ class Server : public QObject
 
     protected slots:
         void onNewConnection();
-        void dataReceived();
         void onConnectionLost();
         void onLog(const QString& log);
 
     protected:
-        Logger *m_logger;
         bool checkConnexion();
         Client* getClientBySocket(QTcpSocket*);
         QTcpServer *m_server;
-        QMap<QTcpSocket*, Client*> m_clients;
-        quint16 m_messageSize;
-        QTimer *m_timer;
+        QList<Client*> m_clients;
         bool m_serverStarted;
         CommandManager m_commandManager;
 };

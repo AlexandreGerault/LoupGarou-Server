@@ -17,7 +17,7 @@ ServerWindow::ServerWindow()
     connect(m_sendCommandButton, SIGNAL(clicked()), this, SLOT(sendCommand()));
     connect(m_commandLineEditor, SIGNAL(returnPressed()), this, SLOT(sendCommand()));
     connect(m_server, SIGNAL(serverStateChange()), this, SLOT(onServerStateChange()));
-    connect(m_server->logger(), SIGNAL(logging(QString,LogType)), this, SLOT(onLog(QString, LogType)));
+    //connect(m_server->logger(), SIGNAL(logging(QString,LogType)), this, SLOT(onLog(QString, LogType)));
     connect(m_clearButton, SIGNAL(clicked(bool)), this, SLOT(onClearButtonClicked()));
     connect(m_logsList, SIGNAL(cursorPositionChanged()), this, SLOT(onCursorPositionChanged()));
 
@@ -49,6 +49,12 @@ void ServerWindow::writeALog(const QString &log, LogType c)
             style = "color: orange;";
             type = "warning";
         break;
+
+        case LogType::Data:
+            style = "color: blue;";
+            type = "data";
+        break;
+
     }
     QString message = "<span style=\"" + style + "\"> " + log + "</span><br />";
 
@@ -64,7 +70,7 @@ void ServerWindow::sendCommand()
 {
     QString command = m_commandLineEditor->text();
 
-    m_server->logger()->log(command, LogType::Send);
+    //m_server->logger()->log(command, LogType::Send);
     m_commandLineEditor->clear();
 
     QStringList cmdArgs = command.split("[ ]");
@@ -76,7 +82,7 @@ void ServerWindow::sendCommand()
     }
     catch(QString e)
     {
-        m_server->logger()->log(e, LogType::Error);
+        //m_server->logger()->log(e, LogType::Error);
     }
 }
 

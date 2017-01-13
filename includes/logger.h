@@ -12,30 +12,16 @@
 
 enum class LogType {Info, Warning, Error, Send, Data};
 
-class Logger : public QObject
+class Logger
 {
-    Q_OBJECT
-    Q_DISABLE_COPY(Logger)
-
     public:
-        static Logger* Instance();
-        static void kill();
+        Logger(QString fileName);
+        virtual ~Logger() = default;
 
-        bool openLogFile();
-        bool closeLogFile();
-        void log(QString log, LogType logType);
+        virtual void log(QString log, LogType logType) = 0;
 
-    signals:
-        void logging(QString, LogType);
-
-    public slots:
-        void writeToLogFile(QString log);
-
-    private:
-        Logger();
-        ~Logger(){};
-
-        static Logger *m_pInstance;
+    protected:
+        QString m_fileName;
         QFile m_logFile;
         QTextStream m_stream;
 };

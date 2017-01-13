@@ -13,7 +13,7 @@ void HelpCommand::execute(Server *s)
 
         for(Command *c : commands)
         {
-            Logger::Instance()->log(c->getName().toUpper() + " - " + c->getDescription(), LogType::Info);
+            //Logger::Instance()->log(c->getName().toUpper() + " - " + c->getDescription(), LogType::Info);
         }
     }
     else

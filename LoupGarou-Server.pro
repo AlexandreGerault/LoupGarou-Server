@@ -35,6 +35,9 @@ SOURCES += sources/main.cpp\
     sources/Commands/helpcommand.cpp \
     sources/Commands/stopcommand.cpp \
     sources/Commands/listcommand.cpp \
+    sources/Services/Loggers/networklogger.cpp \
+    sources/Services/Loggers/nulllogger.cpp \
+    sources/locator.cpp \
     sources/logger.cpp
 
 HEADERS  += \
@@ -46,6 +49,9 @@ HEADERS  += \
     includes/Commands/helpcommand.h \
     includes/Commands/stopcommand.h \
     includes/Commands/listcommand.h \
+    includes/Services/Loggers/networklogger.h \
+    includes/Services/Loggers/nulllogger.h \
+    includes/locator.h \
     includes/logger.h
 
 

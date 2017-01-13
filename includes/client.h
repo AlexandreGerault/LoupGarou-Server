@@ -4,11 +4,17 @@
 #include <QObject>
 #include <QtNetwork/QtNetwork>
 #include <memory>
+#include <iostream>
+#include "includes/logger.h"
 
-class Client
+class Client : public QObject
 {
+    Q_OBJECT
+
     public:
-        Client();
+        Client(QTcpSocket* socket);
+        bool isAuthenticated() const;
+        QTcpSocket* socket() const;
         QString pseudo() const;
         int grade() const;
 
@@ -18,8 +24,14 @@ class Client
 
         void send(QString);
 
+    public slots:
+        void onDataReceived();
+
     private:
         QString m_pseudo;
+        bool m_authenticated;
+        quint16 m_messageSize;
+        QTcpSocket *m_socket;
         int m_grade;
 
 };
