@@ -25,10 +25,9 @@ class Server : public QObject
         ~Server();
 
         void startServer();
-        void startGame();
         void stopServer();
         void sendToAll(QString command);
-        void commandProcess(Command &cmd);
+        //void commandProcess(Command &cmd);
         void update();
         QList<Client*> clients();
 
@@ -36,7 +35,7 @@ class Server : public QObject
         /* GETTERS */
         /***********/
         bool isStarted() const;
-        const CommandManager& getCommandManager();
+        //const CommandManager& getCommandManager();
 
     signals:
         void serverStateChange();

@@ -9,12 +9,12 @@ void HelpCommand::execute(Server *s)
 {
     if(s != NULL)
     {
-        QList<Command*> commands = s->getCommandManager().getCommands();
+        /*QList<Command*> commands = s->getCommandManager().getCommands();
 
         for(Command *c : commands)
         {
             Locator::getLogger()->log(c->getName().toUpper() + " - " + c->getDescription(), LogType::Info);
-        }
+        }*/
     }
     else
     {

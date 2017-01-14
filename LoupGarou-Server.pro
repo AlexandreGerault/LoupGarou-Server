@@ -28,7 +28,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += sources/main.cpp\
     sources/client.cpp \
-    sources/serverwindow.cpp \
     sources/command.cpp \
     sources/commandmanager.cpp \
     sources/server.cpp \
@@ -43,7 +42,6 @@ SOURCES += sources/main.cpp\
 
 HEADERS  += \
     includes/client.h \
-    includes/serverwindow.h \
     includes/command.h \
     includes/commandmanager.h \
     includes/server.h \
@@ -57,5 +55,4 @@ HEADERS  += \
     includes/application.h
 
 
-FORMS    += \
-    serverwindow.ui
+FORMS    +=

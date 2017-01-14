@@ -23,11 +23,6 @@ Server::Server() : m_serverStarted(false)
         Locator::getLogger()->log("Le serveur est déjà lancé", LogType::Error);
 }
 
-void Server::startGame()
-{
-    sendToAll("say The game is started");
-}
-
 void Server::stopServer()
 {
     if(m_serverStarted)
@@ -93,14 +88,14 @@ void Server::onConnectionLost()
 /***********************
  * Protected functions *
  ***********************/
-void Server::commandProcess(Command &cmd)
+/*void Server::commandProcess(Command &cmd)
 {
     try {
         cmd.execute(this);
     } catch(QString error) {
         Locator::getLogger()->log(error, LogType::Error);
     }
-}
+}*/
 
 void Server::sendToAll(QString message)
 {
@@ -125,10 +120,10 @@ Client * Server::getClientBySocket( QTcpSocket * sock )
      return *it;
  }
 
-const CommandManager& Server::getCommandManager()
+/*const CommandManager& Server::getCommandManager()
 {
     return m_commandManager;
-}
+}*/
 
 bool Server::isStarted() const
 {
