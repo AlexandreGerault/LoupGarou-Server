@@ -5,7 +5,7 @@
 #include <QtNetwork/QtNetwork>
 #include <memory>
 #include <iostream>
-#include "includes/logger.h"
+#include "includes/locator.h"
 
 class Client : public QObject
 {
@@ -22,7 +22,7 @@ class Client : public QObject
         void setPseudo(QString pseudo);
         void setGrade(int grade);
 
-        void send(QString);
+        void send(const QString&);
 
     public slots:
         void onDataReceived();

@@ -7,10 +7,12 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
     Locator::initialize();
     Logger *nw = new NetworkLogger();
     Locator::provide(nw);
-    ServerWindow w;
-    w.show();
+
+    Server s;
+
     return a.exec();
 }

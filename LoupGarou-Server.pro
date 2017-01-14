@@ -38,7 +38,8 @@ SOURCES += sources/main.cpp\
     sources/Services/Loggers/networklogger.cpp \
     sources/Services/Loggers/nulllogger.cpp \
     sources/locator.cpp \
-    sources/logger.cpp
+    sources/logger.cpp \
+    sources/application.cpp
 
 HEADERS  += \
     includes/client.h \
@@ -52,7 +53,8 @@ HEADERS  += \
     includes/Services/Loggers/networklogger.h \
     includes/Services/Loggers/nulllogger.h \
     includes/locator.h \
-    includes/logger.h
+    includes/logger.h \
+    includes/application.h
 
 
 FORMS    += \

@@ -10,7 +10,7 @@ class Locator
 public:
     static void initialize()
     {
-        m_service = &m_nullService;
+        m_service = &nullService();
     }
     static Logger* getLogger()
     {
@@ -19,14 +19,14 @@ public:
     static void provide(Logger* service)
     {
         if (service == NULL)
-            m_service = &m_nullService;
+            m_service = &nullService();
         else
             m_service = service;
     }
 
 private:
     static Logger *m_service;
-    static NullLogger m_nullService;
+    static Logger& nullService();
 };
 
 #endif // LOCATOR_H

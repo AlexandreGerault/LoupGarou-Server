@@ -12,9 +12,9 @@ void ListCommand::execute(Server *s)
     for(Client* c : s->clients())
     {
         i++;
-        //s->logger()->log("Client " + QString::number(i), LogType::Info);
-        //s->logger()->log("----------------------------", LogType::Info);
-        //s->logger()->log("Pseudo: " + c->pseudo() + "", LogType::Info);
+        Locator::getLogger()->log("Client " + QString::number(i), LogType::Info);
+        Locator::getLogger()->log("----------------------------", LogType::Info);
+        Locator::getLogger()->log("Pseudo: " + c->pseudo() + "", LogType::Info);
         std::cout << "\n" << std::endl;
     }
     return;

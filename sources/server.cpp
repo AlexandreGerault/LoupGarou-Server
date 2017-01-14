@@ -3,30 +3,24 @@
 Server::Server() : m_serverStarted(false)
 {
     m_server = new QTcpServer(this);
-    //connect(m_logger, SIGNAL(logging(QString,LogType)), this, SLOT(onLog(QString)));
     if(!m_serverStarted)
     {
-        //m_logger->log("Démarrage du serveur", LogType::Info);
+        Locator::getLogger()->log("Démarrage du serveur", LogType::Info);
         if(!m_server->listen(QHostAddress::Any, 56565))
         {
-            //m_logger->log("Le serveur n'a pas pu démarrer", LogType::Error);
+            Locator::getLogger()->log("Le serveur n'a pas pu démarrer", LogType::Error);
         }
         else
         {
             m_serverStarted = true;
-            //m_logger->log("Le serveur a pu démarrer sur le port " + QString::number(m_server->serverPort()), LogType::Info);
-            //m_logger->log("En attente de clients", LogType::Info);
+            Locator::getLogger()->log("Le serveur a pu démarrer sur le port " + QString::number(m_server->serverPort()), LogType::Info);
+            Locator::getLogger()->log("En attente de clients", LogType::Info);
             connect(m_server, SIGNAL(newConnection()), this, SLOT(onNewConnection()));
             emit serverStateChange();
         }
     }
-    //else
-        //m_logger->log("Le serveur est déjà lancé", LogType::Error);
-}
-
-void Server::onLog(const QString& log)
-{
-    std::cout << log.toStdString() << std::endl;
+    else
+        Locator::getLogger()->log("Le serveur est déjà lancé", LogType::Error);
 }
 
 void Server::startGame()
@@ -39,12 +33,12 @@ void Server::stopServer()
     if(m_serverStarted)
     {
         m_serverStarted = false;
-        //m_logger->log("Arrêt du serveur.", LogType::Info);
+        Locator::getLogger()->log("Arrêt du serveur.", LogType::Info);
         m_server->close();
     }
     else
     {
-        //m_logger->log("Le serveur n'a pas encore démarré.", LogType::Error);
+        Locator::getLogger()->log("Le serveur n'a pas encore démarré.", LogType::Error);
     }
 
 }
@@ -59,7 +53,7 @@ void Server::update()
  *********/
 void Server::onNewConnection()
 {
-    //m_logger->log("Un nouveau client vient de se connecter", LogType::Info);
+    Locator::getLogger()->log("Un nouveau client vient de se connecter", LogType::Info);
 
     QTcpSocket *newClientSocket = m_server->nextPendingConnection();
 
@@ -69,19 +63,21 @@ void Server::onNewConnection()
     newClient->setPseudo("Client " + QString::number(m_clients.size()+1));
 
     m_clients.append(newClient);
+
+    Locator::getLogger()->log(newClient->pseudo() + " is now connected.", LogType::Info);
 }
 
 void Server::onConnectionLost()
 {
     QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
     if(socket == 0){
-        //m_logger->log("Client not found \n", LogType::Info);
+        Locator::getLogger()->log("Client not found", LogType::Info);
         return;
     }
 
     Client *c = getClientBySocket(socket);
     QString name = c->pseudo();
-    //m_logger->log(c->pseudo() + " has been disconnected.\n", LogType::Info);
+    Locator::getLogger()->log(c->pseudo() + " has been disconnected.", LogType::Info);
 
     //We delete the socket
     socket->close();            //Closing socket
@@ -91,7 +87,7 @@ void Server::onConnectionLost()
     //Then we delete the client which was attached
     delete c;
 
-    //m_logger->log(name + " has been removed.\n", LogType::Info);
+    Locator::getLogger()->log(name + " has been removed.", LogType::Info);
 }
 
 /***********************
@@ -102,7 +98,7 @@ void Server::commandProcess(Command &cmd)
     try {
         cmd.execute(this);
     } catch(QString error) {
-        //m_logger->log(error, LogType::Error);
+        Locator::getLogger()->log(error, LogType::Error);
     }
 }
 

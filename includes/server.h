@@ -12,9 +12,9 @@
 #include <iostream>
 #include <algorithm>
 #include "client.h"
-#include "logger.h"
 #include <QDebug>
 #include "includes/commandmanager.h"
+#include "locator.h"
 
 class Server : public QObject
 {
@@ -30,7 +30,6 @@ class Server : public QObject
         void sendToAll(QString command);
         void commandProcess(Command &cmd);
         void update();
-        Logger *logger();
         QList<Client*> clients();
 
         /***********/
@@ -45,7 +44,6 @@ class Server : public QObject
     protected slots:
         void onNewConnection();
         void onConnectionLost();
-        void onLog(const QString& log);
 
     protected:
         bool checkConnexion();

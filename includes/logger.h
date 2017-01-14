@@ -24,6 +24,7 @@ class Logger
         QString m_fileName;
         QFile m_logFile;
         QTextStream m_stream;
+        QString typeToString(LogType logType);
 };
 
 #endif // LOGGER_H

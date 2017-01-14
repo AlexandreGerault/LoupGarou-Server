@@ -26,14 +26,22 @@ int Client::grade() const
     return m_grade;
 }
 
-void Client::send(QString command)
+void Client::send(const QString &command)
 {
+    QByteArray packet;
+    QDataStream out(&packet, QIODevice::WriteOnly);
+
+    out << (quint16) 0;
+    out << command;
+    out.device()->seek(0);
+    out << (quint16) (packet.size() - sizeof(quint16));
+
+    m_socket->write(packet);
 }
 
 
 void Client::onDataReceived()
 {
-    std::cout << "TEST TEST TEST TEST" << std::endl;
     QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
 
     if(socket == 0)
@@ -58,6 +66,7 @@ void Client::onDataReceived()
             return;
 
         in >> data;
+        Locator::getLogger()->log("[" + pseudo() + "] " + data, LogType::Data);
     }
 }
 
