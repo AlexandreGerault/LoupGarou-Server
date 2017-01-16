@@ -4,7 +4,7 @@
 #include <QList>
 #include <QString>
 
-class Server;
+class Application;
 
 class Command
 {
@@ -16,7 +16,7 @@ class Command
         Command(QString name, QString description);
         virtual ~Command() = default;
 
-        virtual void execute(Server *s) = 0;
+        virtual void execute() = 0;
         QString getName() const;
         QString getDescription() const;
 

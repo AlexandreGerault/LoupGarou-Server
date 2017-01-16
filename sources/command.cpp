@@ -1,5 +1,5 @@
 #include "includes/command.h"
-#include "includes/server.h"
+#include "includes/application.h"
 
 Command::Command()
 {

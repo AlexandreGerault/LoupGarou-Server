@@ -35,12 +35,6 @@ void Server::stopServer()
     {
         Locator::getLogger()->log("Le serveur n'a pas encore démarré.", LogType::Error);
     }
-
-}
-
-void Server::update()
-{
-
 }
 
 /*********

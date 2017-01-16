@@ -1,20 +1,20 @@
 #include "includes/Commands/helpcommand.h"
-#include "includes/server.h"
+#include "includes/application.h"
 
 HelpCommand::HelpCommand() : Command("help", "Obtenir de l'aide")
 {
 }
 
-void HelpCommand::execute(Server *s)
+void HelpCommand::execute()
 {
-    if(s != NULL)
+    if(Application::getInstance()->getServer() != NULL)
     {
-        /*QList<Command*> commands = s->getCommandManager().getCommands();
+        QList<Command*> commands = Application::getInstance()->commandManager()->getCommands();
 
         for(Command *c : commands)
         {
             Locator::getLogger()->log(c->getName().toUpper() + " - " + c->getDescription(), LogType::Info);
-        }*/
+        }
     }
     else
     {

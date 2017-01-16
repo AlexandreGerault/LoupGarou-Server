@@ -1,15 +1,15 @@
 #include "includes/Commands/listcommand.h"
-#include "includes/server.h"
+#include "includes/application.h"
 
 ListCommand::ListCommand() : Command("list", "Cette commande liste les serveurs connectés")
 {
 
 }
 
-void ListCommand::execute(Server *s)
+void ListCommand::execute()
 {
     int i = 0;
-    for(Client* c : s->clients())
+    for(Client* c : Application::getInstance()->getServer()->clients())
     {
         i++;
         Locator::getLogger()->log("Client " + QString::number(i), LogType::Info);

@@ -30,6 +30,15 @@ QList<Command*> CommandManager::getCommands() const
     return cmds;
 }
 
+void CommandManager::commandProcess(std::string inputCommand)
+{
+    try {
+        getCommand(QString::fromStdString(inputCommand))->execute();
+    } catch(QString error) {
+        Locator::getLogger()->log(error, LogType::Error);
+    }
+}
+
 CommandManager::~CommandManager()
 {
     for(auto it = m_commands.begin(); it!= m_commands.end(); it++)

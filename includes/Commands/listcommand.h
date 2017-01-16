@@ -7,7 +7,7 @@ class ListCommand : public Command
 {
 public:
     ListCommand();
-    void execute(Server *s) override;
+    void execute() override;
 private:
 };
 
