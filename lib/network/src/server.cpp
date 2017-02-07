@@ -14,7 +14,7 @@ Server::Server() : m_serverStarted(false)
         else
         {
             m_serverStarted = true;
-            Locator::getLogger()->log("Le serveur a pu démarrer sur le port " + QString::number(m_server->serverPort()), LogType::Info);
+            Locator::getLogger()->log("Le serveur a pu démarrer sur le port " + std::to_string(m_server->serverPort()), LogType::Info);
             Locator::getLogger()->log("En attente de clients", LogType::Info);
             connect(m_server, SIGNAL(newConnection()), this, SLOT(onNewConnection()));
             emit serverStateChange();
@@ -50,7 +50,7 @@ void Server::onNewConnection()
     Client *newClient = new Client(newClientSocket);
 
     connect(newClient->socket(), SIGNAL(disconnected()), this, SLOT(onConnectionLost()));
-    newClient->setPseudo("Client " + QString::number(m_clients.size()+1));
+    newClient->setPseudo("Client " + std::to_string(m_clients.size()+1));
 
     m_clients.append(newClient);
 
@@ -66,7 +66,7 @@ void Server::onConnectionLost()
     }
 
     Client *c = getClientBySocket(socket);
-    QString name = c->pseudo();
+    std::string name = c->pseudo();
     Locator::getLogger()->log(c->pseudo() + " has been disconnected.", LogType::Info);
 
     //We delete the socket

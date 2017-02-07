@@ -6,35 +6,33 @@ CommandManager::CommandManager()
     Command *stopCmd  = new StopCommand;
     Command *listCmd = new ListCommand;
 
-    m_commands.insert(QString::fromStdString(stopCmd->getName()),  stopCmd);
-    m_commands.insert(QString::fromStdString(helpCmd->getName()),  helpCmd);
-    m_commands.insert(QString::fromStdString(listCmd->getName()), listCmd);
+    m_commands.insert(std::pair<std::string,Command*>(stopCmd->getName(), stopCmd));
+    m_commands.insert(std::pair<std::string,Command*>(helpCmd->getName(), helpCmd));
+    m_commands.insert(std::pair<std::string,Command*>(listCmd->getName(), listCmd));
 }
 
-Command* CommandManager::getCommand(QString label) const
+Command* CommandManager::getCommand(std::string label) const
 {
-    for(auto it = m_commands.begin(); it!= m_commands.end(); it++)
+    auto it = m_commands.find(label);
+    return it->second;
+}
+
+std::list<Command*> CommandManager::getCommands() const
+{
+    std::list<Command*> cmds;
+    auto listIterator = cmds.begin();
+    for (auto it = m_commands.begin(); it!=m_commands.end(); it++)
     {
-        if(label == it.key())
-        {
-            return *it;
-        }
+        cmds.insert(listIterator, it->second);
     }
-    QString exception = "Command not found";
-    throw exception;
-}
-
-QList<Command*> CommandManager::getCommands() const
-{
-    QList<Command*> cmds = m_commands.values();
     return cmds;
 }
 
 void CommandManager::commandProcess(std::string inputCommand)
 {
     try {
-        getCommand(QString::fromStdString(inputCommand))->execute();
-    } catch(QString error) {
+        getCommand(inputCommand)->execute();
+    } catch(std::string error) {
         Locator::getLogger()->log(error, LogType::Error);
     }
 }
@@ -43,7 +41,7 @@ CommandManager::~CommandManager()
 {
     for(auto it = m_commands.begin(); it!= m_commands.end(); it++)
     {
-        delete *it;
+        delete it->second;
     }
     m_commands.clear();
 }

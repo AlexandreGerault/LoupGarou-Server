@@ -12,7 +12,7 @@ void ListCommand::execute()
     for(Client* c : Application::getInstance()->getServer()->clients())
     {
         i++;
-        Locator::getLogger()->log("Client " + QString::number(i), LogType::Info);
+        Locator::getLogger()->log("Client " + std::to_string(i), LogType::Info);
         Locator::getLogger()->log("----------------------------", LogType::Info);
         Locator::getLogger()->log("Pseudo: " + c->pseudo() + "", LogType::Info);
         std::cout << std::endl;

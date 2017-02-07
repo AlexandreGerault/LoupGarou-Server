@@ -1,9 +1,10 @@
 #ifndef COMMANDMANAGER_H
 #define COMMANDMANAGER_H
 
-#include <QMap>
 #include <QObject>
 #include <iostream>
+#include <map>
+#include <list>
 #include "lib/UI/include/Commands/stopcommand.h"
 #include "lib/UI/include/Commands/helpcommand.h"
 #include "lib/UI/include/Commands/listcommand.h"
@@ -25,12 +26,12 @@ class CommandManager : public QObject
 
         virtual ~CommandManager();
 
-        Command* getCommand(QString label) const;
-        QList<Command*> getCommands() const;
+        Command* getCommand(std::string label) const;
+        std::list<Command*> getCommands() const;
     public slots:
         void commandProcess(std::string inputCommand);
     private:
-        QMap<QString, Command*> m_commands;
+        std::map<std::string, Command*> m_commands;
 };
 
 #endif // COMMANDMANAGER_H

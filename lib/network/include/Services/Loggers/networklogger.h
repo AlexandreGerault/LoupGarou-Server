@@ -7,7 +7,7 @@ class NetworkLogger : public Logger
 {
 public:
     NetworkLogger();
-    void log(QString log, LogType logType) override;
+    void log(std::string log, LogType logType) override;
 };
 
 #endif // NETWORKLOGGER_H

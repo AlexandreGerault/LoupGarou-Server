@@ -5,7 +5,7 @@ NullLogger::NullLogger() : Logger("null.log")
 
 }
 
-void NullLogger::log(QString log, LogType logType)
+void NullLogger::log(std::string log, LogType logType)
 {
 
 }

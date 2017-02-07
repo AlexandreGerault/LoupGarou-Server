@@ -9,11 +9,11 @@ QTcpSocket* Client::socket() const
 {
     return m_socket;
 }
-void Client::setPseudo(QString pseudo)
+void Client::setPseudo(std::string pseudo)
 {
     m_pseudo = pseudo;
 }
-QString Client::pseudo() const
+std::string Client::pseudo() const
 {
     return m_pseudo;
 }
@@ -66,7 +66,7 @@ void Client::onDataReceived()
             return;
 
         in >> data;
-        Locator::getLogger()->log("[" + pseudo() + "] " + data, LogType::Data);
+        Locator::getLogger()->log("[" + pseudo() + "] " + data.toStdString(), LogType::Data);
     }
 }
 

@@ -15,11 +15,11 @@ class Client : public QObject
         Client(QTcpSocket* socket);
         bool isAuthenticated() const;
         QTcpSocket* socket() const;
-        QString pseudo() const;
+        std::string pseudo() const;
         int grade() const;
 
         void setSocket(QTcpSocket *socket);
-        void setPseudo(QString pseudo);
+        void setPseudo(std::string pseudo);
         void setGrade(int grade);
 
         void send(const QString&);
@@ -28,7 +28,7 @@ class Client : public QObject
         void onDataReceived();
 
     private:
-        QString m_pseudo;
+        std::string m_pseudo;
         bool m_authenticated;
         quint16 m_messageSize;
         QTcpSocket *m_socket;

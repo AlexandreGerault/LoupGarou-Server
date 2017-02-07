@@ -9,12 +9,12 @@ void HelpCommand::execute()
 {
     if(Application::getInstance()->getServer() != NULL)
     {
-        QList<Command*> commands = Application::getInstance()->commandManager()->getCommands();
+        std::list<Command*> commands = Application::getInstance()->commandManager()->getCommands();
 
         for(Command *c : commands)
         {
-            QString name = QString::fromStdString(c->getName()).toUpper();
-            QString desc = QString::fromStdString(c->getDescription()).toUpper();
+            std::string name = c->getName();
+            std::string desc = c->getDescription();
             Locator::getLogger()->log(name + " - " + desc, LogType::Info);
         }
     }
