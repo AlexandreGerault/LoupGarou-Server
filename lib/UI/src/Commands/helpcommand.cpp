@@ -20,6 +20,6 @@ void HelpCommand::execute()
     }
     else
     {
-        throw QString("Erreur : pointeur de serveur null");
+        throw std::string("Erreur : pointeur de serveur null");
     }
 }

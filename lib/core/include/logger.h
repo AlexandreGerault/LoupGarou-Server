@@ -1,14 +1,11 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-#include <QWidget>
 #include <QDateTime>
 #include <QTextStream>
 #include <iostream>
 #include <QFile>
-#include <QTextStream>
 #include <QString>
-#include <QTimer>
 
 enum class LogType {Info, Warning, Error, Send, Data};
 
