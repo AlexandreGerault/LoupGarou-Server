@@ -9,6 +9,7 @@ Server::Server() : m_serverStarted(false)
         if(!m_server->listen(QHostAddress::Any, 56565))
         {
             Locator::getLogger()->log("Le serveur n'a pas pu démarrer", LogType::Error);
+            throw("Le serveur n'a pas pu démarrer");
         }
         else
         {

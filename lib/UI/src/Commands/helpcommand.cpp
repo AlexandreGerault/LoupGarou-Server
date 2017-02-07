@@ -13,7 +13,9 @@ void HelpCommand::execute()
 
         for(Command *c : commands)
         {
-            Locator::getLogger()->log(c->getName().toUpper() + " - " + c->getDescription(), LogType::Info);
+            QString name = QString::fromStdString(c->getName()).toUpper();
+            QString desc = QString::fromStdString(c->getDescription()).toUpper();
+            Locator::getLogger()->log(name + " - " + desc, LogType::Info);
         }
     }
     else

@@ -4,10 +4,17 @@ Application *Application::m_instance = NULL;
 
 Application::Application()
 {
-    m_console = new MMI();
+}
+
+void Application::run()
+{
+    try{m_server = new Server();}
+    catch(std::string message){std::cout << message;}
+    std::cout << "Serveur créé" << std::endl;
     m_commandManager = new CommandManager();
-    m_server = new Server();
-    connect(m_console, &MMI::commandReceived, m_commandManager, &CommandManager::commandProcess);
+    std::cout << "CommandManager créé" << std::endl;
+    m_console = new MMI();
+    std::cout << "IHM créé" << std::endl;
 }
 
 Application* Application::getInstance()

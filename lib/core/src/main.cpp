@@ -11,6 +11,7 @@ int main(int argc, char *argv[])
     Locator::provide(nw);
 
     Application *app = Application::getInstance();
+    app->run();
 
     return a.exec();
 }

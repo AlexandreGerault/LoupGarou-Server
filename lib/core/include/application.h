@@ -1,22 +1,30 @@
+/**
+ * @file        /lib/core/include/application.h
+ * @author      alexan14
+ * @version     1.0
+ * @date        05 Janvier 2017
+ * @brief       Classe centrale de toute l'application
+ *
+ * @details     Cette classe représente l'application et utilise les modules de celles-ci.
+ */
+
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include <QObject>
 #include <memory>
 #include "lib/UI/include/commandmanager.h"
 #include "lib/core/include/locator.h"
 #include "lib/network/include/server.h"
 #include "lib/UI/include/mmi.h"
 
-class Application : public QObject
+class Application
 {
-    Q_OBJECT
-
     public:
         Application();
         static Application* getInstance();
         static void kill();
         ~Application();
+        void run();
 
         /***********
          * GETTERS *

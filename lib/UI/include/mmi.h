@@ -5,6 +5,8 @@
 #include <QObject>
 #include <QSocketNotifier>
 
+class Application;
+
 class MMI : public QObject
 {
     Q_OBJECT

@@ -5,15 +5,15 @@ Command::Command()
 {
 }
 
-Command::Command(QString name, QString description) : m_name(name), m_description(description)
+Command::Command(std::string name, std::string description) : m_name(name), m_description(description)
 {
 }
 
-QString Command::getName() const
+std::string Command::getName() const
 {
     return m_name;
 }
-QString Command::getDescription() const
+std::string Command::getDescription() const
 {
     return m_description;
 }
