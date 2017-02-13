@@ -9,7 +9,7 @@ Server::Server() : m_serverStarted(false)
         if(!m_server->listen(QHostAddress::Any, 56565))
         {
             Locator::getLogger()->log("Le serveur n'a pas pu démarrer", LogType::Error);
-            throw("Le serveur n'a pas pu démarrer");
+            throw std::string("Le serveur n'a pas pu démarrer");
         }
         else
         {
@@ -52,7 +52,7 @@ void Server::onNewConnection()
     connect(newClient->socket(), SIGNAL(disconnected()), this, SLOT(onConnectionLost()));
     newClient->setPseudo("Client " + std::to_string(m_clients.size()+1));
 
-    m_clients.append(newClient);
+    m_clients.insert(m_clients.cend(), newClient);
 
     Locator::getLogger()->log(newClient->pseudo() + " is now connected.", LogType::Info);
 }
@@ -71,7 +71,7 @@ void Server::onConnectionLost()
 
     //We delete the socket
     socket->close();            //Closing socket
-    m_clients.removeOne(c);     //Remove from QMap
+    m_clients.remove(c);     //Remove from QMap
     socket->deleteLater();      //Finnaly delete it
 
     //Then we delete the client which was attached
@@ -112,7 +112,7 @@ bool Server::isStarted() const
     return m_serverStarted;
 }
 
-QList<Client*> Server::clients()
+std::list<Client*> Server::clients()
 {
     return m_clients;
 }

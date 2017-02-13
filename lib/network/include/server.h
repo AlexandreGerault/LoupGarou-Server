@@ -1,9 +1,9 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include <QWidget>
 #include <QtNetwork/QtNetwork>
 #include <iostream>
+#include <list>
 #include <algorithm>
 #include "lib/network/include/client.h"
 #include "lib/core/include/locator.h"
@@ -19,7 +19,7 @@ class Server : public QObject
         void startServer();
         void stopServer();
         void sendToAll(QString command);
-        QList<Client*> clients();
+        std::list<Client*> clients();
 
         /***********/
         /* GETTERS */
@@ -36,7 +36,7 @@ class Server : public QObject
         bool checkConnexion();
         Client* getClientBySocket(QTcpSocket*);
         QTcpServer *m_server;
-        QList<Client*> m_clients;
+        std::list<Client*> m_clients;
         bool m_serverStarted;
 };
 

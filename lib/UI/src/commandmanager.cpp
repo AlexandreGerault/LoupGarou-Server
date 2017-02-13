@@ -14,7 +14,10 @@ CommandManager::CommandManager()
 Command* CommandManager::getCommand(std::string label) const
 {
     auto it = m_commands.find(label);
-    return it->second;
+    if(it != m_commands.end())
+        return it->second;
+    else
+        throw std::string("Command not found");
 }
 
 std::list<Command*> CommandManager::getCommands() const
